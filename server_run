@@ -1,0 +1,28 @@
+from flask import Flask, request, jsonify
+import openai
+
+app = Flask(__name__)
+
+# Вставь свой API-ключ OpenAI
+openai.api_key = 'YOUR_OPENAI_API_KEY'
+
+def interpret_command(command):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=f"Interprete this Unity command: {command}",
+        max_tokens=100
+    )
+    return response.choices[0].text.strip()
+
+@app.route('/interpret', methods=['POST'])
+def interpret():
+    data = request.json
+    command = data['command']
+    
+    # Интерпретация команды
+    interpreted_command = interpret_command(command)
+    
+    return jsonify({"result": interpreted_command})
+
+if __name__ == '__main__':
+    app.run(port=5000)
