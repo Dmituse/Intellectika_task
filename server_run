@@ -4,7 +4,7 @@ import openai
 app = Flask(__name__)
 
 # Вставь свой API-ключ OpenAI
-openai.api_key = 'YOUR_OPENAI_API_KEY'
+openai.api_key = ' //// api ключ //// '
 
 def interpret_command(command):
     response = openai.Completion.create(
